@@ -1,5 +1,5 @@
 // middleware.ts (gyökér)
-import { Request, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { verifySession } from './app/lib/auth';
 
 const PROTECTED_API = [
@@ -23,7 +23,7 @@ const PUBLIC_PATHS = [
   /^\/favicon\.ico$/,
 ];
 
-export async function middleware(req: Request) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (PUBLIC_PATHS.some((re) => re.test(pathname))) {
