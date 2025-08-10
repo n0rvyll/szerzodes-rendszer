@@ -1,5 +1,5 @@
 // app/api/files/[documentId]/route.ts
-import { NextRequest, NextResponse } from 'next/server';
+import { Request, NextResponse } from 'next/server';
 import { stat } from 'fs/promises';
 import { createReadStream } from 'fs';
 import path from 'path';
@@ -16,7 +16,7 @@ const UPLOADS_DIR =
     : path.join(process.cwd(), 'uploads');
 
 export async function GET(
-  _req: NextRequest,
+  _req: Request,
   { params }: { params: { documentId: string } }
 ) {
   try {

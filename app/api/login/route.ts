@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { Request, NextResponse } from 'next/server';
 import { createSession } from '../../lib/auth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   const { username, password } = await req.json();
   const U = process.env.ADMIN_USER || 'admin';
   const P = process.env.ADMIN_PASS || 'password';

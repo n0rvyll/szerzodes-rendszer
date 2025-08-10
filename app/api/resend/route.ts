@@ -2,12 +2,12 @@
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-import { NextRequest, NextResponse } from 'next/server';
+import { Request, NextResponse } from 'next/server';
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
 import { sendEmail } from '../../lib/email';
 
-function getBaseUrl(req: NextRequest) {
+function getBaseUrl(req: Request) {
   const envUrl = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL || '').trim();
   if (envUrl) return envUrl.replace(/\/+$/, '');
   return new URL(req.url).origin.replace(/\/+$/, '');
@@ -21,7 +21,7 @@ function escapeHtml(s: string) {
     .replace(/"/g, '&quot;');
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
     const { token } = await req.json();
     if (!token) return NextResponse.json({ error: 'token hiányzik' }, { status: 400 });

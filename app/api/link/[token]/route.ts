@@ -1,12 +1,12 @@
 // app/api/link/[token]/route.ts
-import { NextRequest, NextResponse } from 'next/server';
+import { Request, NextResponse } from 'next/server';
 import { readFile, readdir } from 'fs/promises';
 import path from 'path';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export async function GET(_: NextRequest, context: { params: Promise<{ token: string }> }) {
+export async function GET(_: Request, context: { params: Promise<{ token: string }> }) {
   // A Next 15 miatt a params Promise – ki kell awaitolni
   const { token } = await context.params;
 
