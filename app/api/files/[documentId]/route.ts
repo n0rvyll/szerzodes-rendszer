@@ -1,5 +1,5 @@
 // app/api/files/[documentId]/route.ts
-import { Request, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { stat } from 'fs/promises';
 import { createReadStream } from 'fs';
 import path from 'path';

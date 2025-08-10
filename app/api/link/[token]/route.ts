@@ -1,5 +1,5 @@
 // app/api/link/[token]/route.ts
-import { Request, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { readFile, readdir } from 'fs/promises';
 import path from 'path';
 

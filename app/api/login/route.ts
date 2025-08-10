@@ -1,4 +1,4 @@
-import { Request, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { createSession } from '../../lib/auth';
 
 export const runtime = 'nodejs';
