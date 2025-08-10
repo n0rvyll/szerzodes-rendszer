@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
 import dynamic from 'next/dynamic';
-const PdfReader = dynamic(() => import('../../../components/PdfReader'), { ssr: false });
+const PdfReader = dynamic(() => import('@components/PdfReader'), { ssr: false });
 
 type LinkData = {
   documentId: string;
