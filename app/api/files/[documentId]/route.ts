@@ -15,12 +15,10 @@ const UPLOADS_DIR =
     ? process.env.NEXT_UPLOADS_DIR
     : path.join(process.cwd(), 'uploads');
 
-export async function GET(
-  _req: Request,
-  { params }: { params: { documentId: string } }
-) {
+export async function GET(req: Request, ctx: any) {
   try {
-    const raw = params.documentId || '';
+    const { documentId } = (ctx?.params ?? {}) as { documentId: string };
+    const raw = documentId || '';
     const safeName = path.basename(raw);
 
     // Ha nincs .pdf, próbáljuk azzal is
