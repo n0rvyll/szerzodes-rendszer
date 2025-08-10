@@ -1,0 +1,6 @@
+/* app/globals.css */
+@import "tailwindcss";
+
+/* opcionális: gyors alapok */
+html, body { height: 100%; }
+body { background: #f8fafc; color: #0f172a; } /* slate-50 / slate-900 approx */
