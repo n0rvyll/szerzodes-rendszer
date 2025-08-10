@@ -444,7 +444,7 @@ export default function AdminPage() {
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-2xl font-bold">Okiratok megküldése ügyfelek részére</h1>
-            <p className="text-sm text-slate-500">A zelkészített szerződés tervezett lehet elküldeni az ügyfelek részére, és nyomonkövethető ha azt megnyitották, elolvasták stb.</p>
+            <p className="text-sm text-slate-500">Az elkészített szerződés tervezett lehet elküldeni az ügyfelek részére, és nyomonkövethető ha azt megnyitották, elolvasták stb.</p>
           </div>
         </div>
 
