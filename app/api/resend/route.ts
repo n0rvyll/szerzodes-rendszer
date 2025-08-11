@@ -55,8 +55,9 @@ export async function POST(req: Request) {
     const html = `<!doctype html>
 <html>
   <body style="font-family:Arial,sans-serif;color:#111;line-height:1.5">
-    <p>Tisztelt ${safeName}!</p>
-    <p>${safeTitle} újraküldve. Kérem, olvassa el az alábbi gombra kattintva.</p>
+    <p>Tisztelt <b>${safeName}!</b></p>
+    <p>A(z) ${safeTitle} szerződéstervezetet újra elküldtem. Elolvasás után <b>jelölje be</b> az 
+              „Elolvastam a szerződést” négyzetet, majd kattintson a „Megerősítés” gombra. Ezzel visszajelez a részemre, hogy a szerződést elolvasta.</p>
     <p>
       <a href="${safeUrl}" style="display:inline-block;background:#2563eb;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:600" target="_blank" rel="noopener noreferrer">
         Megnyitás
@@ -65,9 +66,6 @@ export async function POST(req: Request) {
     <p style="color:#6b7280;font-size:12px;margin-top:16px">
       Ha nem működik a gomb, használja ezt a linket:<br/>
       <a href="${safeUrl}" style="color:#2563eb">${safeUrl}</a>
-    </p>
-    <p style="margin-top:16px">
-      Elolvasás után jelölje be az „Elolvastam a szerződést” négyzetet, majd kattintson a „Megerősítés” gombra.
     </p>
     <p style="margin-top:16px">Üdvözlettel:<br/>Keserű Imre, ügyvéd</p>
   </body>
