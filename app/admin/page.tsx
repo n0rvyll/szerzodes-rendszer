@@ -72,7 +72,7 @@ const useReportData = (
     for (const l of links || []) {
       const norm = normalizeStatus(l.status);
       if (norm in base) (base as any)[norm] += 1;
-      if (l.used && norm !== 'used') base.used += 1; // régi rekord kompat.
+      if (l.used && norm !== 'used') base.used += 1;
     }
     return base;
   }, [links]);
