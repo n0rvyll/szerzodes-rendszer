@@ -1,14 +1,12 @@
-// app/api/upload/route.ts
 import { NextResponse } from "next/server";
-import { put } from "@vercel/blob";
-
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+import path from "path";
+import fs from "fs";
+import { mkdirSync } from "fs";
 
 type DocMeta = {
   documentId: string;
-  fileName: string;
-  title?: string;
+  fileName: string; // pl. 1723112345678.pdf
+  title?: string; // emberi név
 };
 
 export async function POST(req: Request) {
@@ -18,35 +16,38 @@ export async function POST(req: Request) {
     const title = (formData.get("title") as string | null)?.trim();
 
     if (!file) {
-      return NextResponse.json(
-        { error: "Nincs fájl a kérésben." },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    }
+    if (file.type !== "application/pdf") {
+      return NextResponse.json({ error: "Only PDF allowed" }, { status: 400 });
     }
 
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
     const documentId = Date.now().toString();
-    const originalName = (file as any).name || "upload.bin";
-    const ext = originalName.includes(".")
-      ? originalName.split(".").pop()
-      : "bin";
-    const blobKey = `uploads/${documentId}.${ext}`;
+    const fileName = `${documentId}.pdf`;
 
-    // ⬇️ Feltöltés a Vercel Blob Store-ba (publikus olvasás)
-    const { url } = await put(blobKey, file, {
-      access: "public",
-      token: process.env.BLOB_READ_WRITE_TOKEN, // a Vercel UI automatikusan felveszi
-    });
+    const uploadsDir = path.join(process.cwd(), "uploads"); // privát mappa
+    mkdirSync(uploadsDir, { recursive: true });
+    const uploadPath = path.join(uploadsDir, fileName);
+    fs.writeFileSync(uploadPath, buffer);
 
-    const meta: DocMeta = {
-      documentId,
-      fileName: `${documentId}.${ext}`,
-      title: title || undefined,
-    };
+    // Manifest frissítése
+    const manifestPath = path.join(uploadsDir, "manifest.json");
+    let manifest: Record<string, DocMeta> = {};
+    if (fs.existsSync(manifestPath)) {
+      try {
+        manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+      } catch {
+        manifest = {};
+      }
+    }
 
-    // Itt most NEM írunk lokális fájlt/manifestet (Vercel-en nem tartós).
-    // A kliens oldalon használd az 'url'-t a megnyitáshoz/letöltéshez.
+    manifest[documentId] = { documentId, fileName, title: title || undefined };
+    fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2), "utf-8");
 
-    return NextResponse.json({ documentId, title: title || null, url });
+    return NextResponse.json({ documentId, title: title || null });
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
